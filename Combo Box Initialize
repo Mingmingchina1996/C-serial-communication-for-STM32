@@ -1,0 +1,23 @@
+#region FUNCTION COMBO BOX INITIALIZE
+        public void ComboBoxInitialize()
+        {
+            //BaudRateSelection Initialize;
+            BaudRateSelection.Items.Add("1200");
+            BaudRateSelection.Items.Add("2400");
+            BaudRateSelection.Items.Add("4800");
+            BaudRateSelection.Items.Add("9600");
+            BaudRateSelection.Items.Add("19200");
+            BaudRateSelection.Items.Add("38400");
+            BaudRateSelection.Items.Add("43000");
+            BaudRateSelection.Items.Add("56000");
+            BaudRateSelection.Items.Add("57600");
+            BaudRateSelection.Items.Add("115200");
+            BaudRateSelection.SelectedIndex = 3;
+            //ComPortSelection Initialize;
+            for (int i = 0; i < 10; i++)
+            {
+                ComPortSelection.Items.Add("COM" + (i + 1).ToString());
+            }
+            ComPortSelection.SelectedIndex = 0;
+        }
+        #endregion
