@@ -1,0 +1,87 @@
+#region CLASS DATADEAL
+    public class DataDeal
+    {
+        SerialPort sp=null;
+        string sendData;
+        string messageBoxTitle = "Message";
+        MessageBoxImage messageBoxImageWarning = MessageBoxImage.Warning;
+        MessageBoxButton messageBoxButton = MessageBoxButton.OK;
+        MessageBoxImage messageBoxImage = MessageBoxImage.Error;
+        #region FUNCTION CONSTRUCTOR
+        public DataDeal(SerialPort sp,string sendData)
+        {
+            this.sp = sp;
+            this.sendData = sendData;
+        }
+        #endregion
+        #region FUNCTION SEND DATA
+        public void DataSend_isHex()
+        {
+            try
+            {
+                if (sp.IsOpen && (sendData != "") && (sp != null))
+                {
+                    // sp.DiscardOutBuffer();
+                    sendData = sendData.Replace("0x", "");                     //去掉0x,0X字符串;
+                    sendData = sendData.Replace("0X", "");
+                    sendData = sendData.Replace(" ", "");                         //去掉空格；
+                    byte[] sendBytes = new byte[sendData.Length / 2];
+                    int j = 0;
+                    for (int i = 0; i < sendData.Length; i += 2)
+                    {
+                        sendBytes[j++] = Convert.ToByte(Int32.Parse(sendData.Substring(i, 2), System.Globalization.NumberStyles.HexNumber));  //将输入的十六进制String转化为Byte数组；
+                    }
+                    sp.Write(sendBytes, 0, sendData.Length / 2);
+                    MessageBox.Show("Send Successfully!\n", messageBoxTitle, messageBoxButton);
+                }
+                else if (sp.IsOpen == false)
+                {
+                    MessageBox.Show("Please Open The Port!\n", messageBoxTitle, messageBoxButton, messageBoxImage);
+                }
+                else
+                {
+                    MessageBox.Show("Please Input The Sending Data!\n", messageBoxTitle, messageBoxButton, messageBoxImage);
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Unable To Send Data!\n", messageBoxTitle, messageBoxButton, messageBoxImage);
+            }
+        }
+        public void DataSend_notHex()
+        {
+            try
+            {
+                if ((sp.IsOpen) && (sendData != ""))                   //Send Data;
+                {
+                    try
+                    {
+                        sp.DiscardOutBuffer();
+                        sp.WriteLine(sendData);
+                        MessageBox.Show("Successfully Send!\n", messageBoxTitle, messageBoxButton);
+                        //       System.Threading.Thread.Sleep(10);
+                        //DataRecieveBox.Text= sp.ReadLine();
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show("Send Failed!\n", messageBoxTitle, messageBoxButton, messageBoxImage);
+                        return;
+                    }
+                }
+                else if (sendData == "")                                       //Data is empty;
+                {
+                    MessageBox.Show("Illegal Sending Data. Input Again!\n", messageBoxTitle, messageBoxButton, messageBoxImage);
+                }
+                else
+                {
+                    MessageBox.Show("Port Is Not Opened Normally!\n", messageBoxTitle, messageBoxButton, messageBoxImageWarning);
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Send Failed!\n", messageBoxTitle, messageBoxButton, messageBoxImage);
+            }
+        }
+#endregion
+    }
+#endregion
