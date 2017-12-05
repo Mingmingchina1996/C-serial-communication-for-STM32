@@ -36,7 +36,7 @@ namespace UpperComputerForSTM32
         }
         #endregion
         #region FUNCTION SEND DATA
-        public void DataSend_isHex()
+        public void DataSend_isHex()                                               //send Hex datas
         {
             try
             {
@@ -69,7 +69,7 @@ namespace UpperComputerForSTM32
                 MessageBox.Show("Unable To Send Data!\n", messageBoxTitle, messageBoxButton, messageBoxImage);
             }
         }
-        public void DataSend_notHex()
+        public void DataSend_notHex()                                  //send datas in string
         {
             try
             {
@@ -158,7 +158,7 @@ namespace UpperComputerForSTM32
         }
         #endregion
         #region FUNCTION CHECK PORT SETTINGS
-        public bool PortSettingCheck()
+        public bool PortSettingCheck()                                    //check portsettings. if port has been setted rightly return ture;
         {
             if (BaudRateSelection.Text.Trim() == "") return false;
             if (ComPortSelection.Text.Trim() == "") return false;
